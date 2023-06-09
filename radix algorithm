@@ -1,0 +1,78 @@
+#You just need to run this code with RadixSorting class and insert ur list by typing it in python console 
+
+# this function used for sort a string list by (radix) and its support all language  
+
+inputStr = input("Enter a list of numbers separated by commas: ")
+
+# Split the input string into a list of strings
+numStrList = inputStr.split(' ')
+
+# Convert the list of strings to a list of integers
+
+
+print(numStrList)
+class RadixSorting :
+    
+# toAscii function will filter the first letter and its will convert them to Ascii number 
+    def letterToAsciiNumber (self ,array):
+        numberList=[]
+        
+        #  spliting only first letters of words to sort and make them ascii number   
+        for i in range(len(array)):
+            toAscii=ord((array[i])[0])
+            numberList.append(toAscii)
+
+        # pass the new list to toAscii fuction 
+        return self.convertToInt(numberList)
+
+
+# convert an string list to a intiger list 
+
+    def convertToInt(self,strList):
+        result=( [int(num) for num in strList])
+        return self.radix_sort(result)
+    
+
+# sort sent list from convertToInt
+
+    def radix_sort(self,arr):
+        max_num = max(arr)
+        exp = 1
+        while max_num // exp > 0:
+            buckets = [list() for _ in range(10)]
+            for num in arr:
+                buckets[(num // exp) % 10].append(num)
+            arr = [num for bucket in buckets for num in bucket]
+            exp *= 10
+        return self.wordSearching(arr) 
+
+
+
+# we need find the word by first letter 
+
+# there is a bug if there is two word started with same letter class can not handle it because we filter the wors by just first letters 
+
+    def wordSearching(self, list) :
+        strList=[]
+        #  spliting only first letters of words to sort  
+        for i in list:
+            toAscii=chr(i)
+            strList.append(toAscii)
+        words=numStrList
+        print(strList)
+        return self.sortWordsByFirstLetters(words,strList)
+
+
+# and sorting the words order by the letters we made
+    def sortWordsByFirstLetters(self,words, firstLetters):
+        def keyFunc(word):
+            return firstLetters.index(word[0])
+        return sorted(words, key=keyFunc)
+
+
+
+
+result=RadixSorting()
+print(result.letterToAsciiNumber(numStrList))
+
+
